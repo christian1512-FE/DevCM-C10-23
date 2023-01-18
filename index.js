@@ -1,10 +1,10 @@
-
-
+const Manager = require('./lib/Manager');
+const team = []
 const inquire = require('inquirer');
 
 
 //MANAGER INPUT QUESTIONS
-function manager() {
+function addManager() {
     inquire.prompt([
         {
             type: 'input',
@@ -18,7 +18,7 @@ function manager() {
         },
         {
             type: 'input',
-            name: 'manager-email',
+            name: 'manageremail',
             message: 'Enter the managers email:'
         },
         {
@@ -26,11 +26,16 @@ function manager() {
             name: 'office',
             message: 'Enter the managers office number:'
         },
-    ])
+    ]).then(answers => {
+        console.log(answers);
+        const manager = new Manager(answers.managersname,answers.managersID,answers.manageremail,answers.office)
+        team.push(manager)
+        mainMenu()
+    })
 }
 
 //EMPLOYEE INPUT QUESTIONS
-function employee() {
+function addEngineer() {
     inquire.prompt([
         {
             type: 'input',
@@ -52,12 +57,15 @@ function employee() {
             name: 'github',
             message: 'Enter the employees github profile:'
         },
-    ])
+    ]).then(answers => {
+        console.log(answers);
+        mainMenu()
+    })
 }
 
 //INTERN INPUT QUESTIONS
 
-function intern() {
+function addIntern() {
     inquire.prompt([
         {
             type: 'input',
@@ -79,5 +87,27 @@ function intern() {
             name: 'school',
             message: 'Enter the interns school name:'
         },
-    ])
+    ]).then(answers => {
+        console.log(answers);
+        mainMenu()
+    })
 }
+
+const mainMenu = () => {
+    inquire.prompt({ type: "list", name: "task", message: "select employee type", choices: ["manager", "engineer", "intern"] }).then(answer => {
+        switch (answer.task) {
+            case "manager":
+                addManager()
+                break;
+            case "engineer":
+                addEngineer()
+                break;
+                case "intern":
+                addIntern()
+                break;
+            default:
+                break;
+        }
+    })
+}
+mainMenu()
