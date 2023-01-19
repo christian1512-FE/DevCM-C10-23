@@ -1,4 +1,6 @@
 const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
 const team = []
 const inquire = require('inquirer');
 
@@ -39,17 +41,17 @@ function addEngineer() {
     inquire.prompt([
         {
             type: 'input',
-            name: 'employeesname',
+            name: 'engineersname',
             message: 'Enter the employees name:',
         },
         {
             type: 'input',
-            name: 'employeeID',
+            name: 'engineersID',
             message: 'Enter the employees ID:',
         },
         {
             type: 'input',
-            name: 'employees-email',
+            name: 'engineersemail',
             message: 'Enter the employees email:'
         },
         {
@@ -59,6 +61,8 @@ function addEngineer() {
         },
     ]).then(answers => {
         console.log(answers);
+        const engineer = new Engineer(answers.engineersname,answers.engineersID,answers.engineersemail,answers.github)
+        team.push(engineer)
         mainMenu()
     })
 }
@@ -89,6 +93,8 @@ function addIntern() {
         },
     ]).then(answers => {
         console.log(answers);
+        const intern = new Intern (answers.internname,answers.internID,answers.internemail,answers.github)
+        team.push(intern)
         mainMenu()
     })
 }
