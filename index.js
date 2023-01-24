@@ -1,7 +1,10 @@
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const fs = require('fs');
+const path = require('path');
 const team = []
+const htmlgenerator = require('./src/htmlgenerator')
 const inquire = require('inquirer');
 
 
@@ -29,8 +32,7 @@ function addManager() {
             message: 'Enter the managers office number:'
         },
     ]).then(answers => {
-        console.log(answers);
-        const manager = new Manager(answers.managersname,answers.managersID,answers.manageremail,answers.office)
+        const manager = new Manager(answers.managersname, answers.managersID, answers.manageremail, answers.office)
         team.push(manager)
         mainMenu()
     })
@@ -60,8 +62,7 @@ function addEngineer() {
             message: 'Enter the employees github profile:'
         },
     ]).then(answers => {
-        console.log(answers);
-        const engineer = new Engineer(answers.engineersname,answers.engineersID,answers.engineersemail,answers.github)
+        const engineer = new Engineer(answers.engineersname, answers.engineersID, answers.engineersemail, answers.github)
         team.push(engineer)
         mainMenu()
     })
@@ -83,7 +84,7 @@ function addIntern() {
         },
         {
             type: 'input',
-            name: 'interns-email',
+            name: 'internsemail',
             message: 'Enter the interns email:',
         },
         {
@@ -91,16 +92,19 @@ function addIntern() {
             name: 'school',
             message: 'Enter the interns school name:'
         },
-    ]).then(answers => {
-        console.log(answers);
-        const intern = new Intern (answers.internname,answers.internID,answers.internemail,answers.github)
-        team.push(intern)
-        mainMenu()
-    })
+    ])
+        .then(answers => {
+            const intern = new Intern(answers.internsname, answers.internsID, answers.internsemail, answers.school)
+            team.push(intern)
+            mainMenu()
+        })
 }
 
+const buildteam = () => {
+    fs.writeFileSync(path.join(__dirname, "/dist/", "team.html"), htmlgenerator(team))
+}
 const mainMenu = () => {
-    inquire.prompt({ type: "list", name: "task", message: "select employee type", choices: ["manager", "engineer", "intern"] }).then(answer => {
+    inquire.prompt({ type: "list", name: "task", message: "select employee type", choices: ["manager", "engineer", "intern", "buildteam"] }).then(answer => {
         switch (answer.task) {
             case "manager":
                 addManager()
@@ -108,9 +112,13 @@ const mainMenu = () => {
             case "engineer":
                 addEngineer()
                 break;
-                case "intern":
+            case "intern":
                 addIntern()
                 break;
+            case "buildteam":
+                buildteam()
+                break;
+
             default:
                 break;
         }
