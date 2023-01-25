@@ -16,10 +16,10 @@
   ## Usage
   Link to Demo
   https://drive.google.com/file/d/1DFtcp-Wrshoswo7lk0Kd8IHLxXUkEMCD/view
-![commandline](../DevCM-C10-23/Images/buildteamcommandline.jpg)
+  ![commandline](../DevCM-C10-23/Images/buildteamcommandline.jpg)
 
- HTML Webpage display
-![htmlview](../DevCM-C10-23/Images/htmldisplay.jpg)
+  HTML Webpage display
+  ![htmlview](../DevCM-C10-23/Images/htmldisplay.jpg)
 
 
   ## Installation
@@ -27,7 +27,7 @@
 
   ## Test
   The user can test the application by running the command npm run test below you can view an example.
-    ![Test](../DevCM-C10-23/Images/test.jpg)
+  ![Test](../DevCM-C10-23/Images/test.jpg)
 
   ## License
   MIT License
